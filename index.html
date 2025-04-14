@@ -35,7 +35,7 @@
         <a-entity
           id="bowser-model"
           scale="2 2 2"
-          rotation="-45 0 0"
+          rotation="-60 0 0"
           gltf-model="#animated-asset"
           animation-mixer="loop: repeat"
           class="clickable"
@@ -44,7 +44,7 @@
       </a-marker>
 
       <!-- Fixed bottom text -->
-      <a-entity position="0 -0.1 -2">
+      <a-entity position="0 -0.2 -2">
         <a-text
           id="quiz-text"
           value=""
@@ -58,16 +58,16 @@
       <!-- Answer options -->
       <a-entity id="options" visible="false">
         <a-text value="1. Mrs Valerie Hoffmann"
-                position="-0.7 -0.4 -2"
+                position="-0.5 -0.4 -2"
                 color="#00FF00"
-                width="2"
+                width="1"
                 class="clickable"
                 id="option1"></a-text>
 
         <a-text value="2. Mrs Annie Fletcher"
-                position="0.7 -0.4 -2"
+                position="-0.5 -0.6 -2"
                 color="#FF0000"
-                width="2"
+                width="1"
                 class="clickable"
                 id="option2"></a-text>
       </a-entity>
