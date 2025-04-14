@@ -97,13 +97,18 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
-        // Show welcome message
-        quizText.setAttribute("value", "Congratulations! You've found the right treasure!");
+        // Step 1: Welcome message
+        quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
-        // Show quiz after 5 seconds
+        // Step 2: After 5 seconds, show quiz intro
         setTimeout(() => {
-          quizText.setAttribute("value", "Do you know who wore this dress?");
-          options.setAttribute("visible", true);
+          quizText.setAttribute("value", "Let's do a quick quiz!");
+
+          // Step 3: After another 3 seconds, show question and options
+          setTimeout(() => {
+            quizText.setAttribute("value", "Do you know who wore this dress?");
+            options.setAttribute("visible", true);
+          }, 3000);
         }, 5000);
 
         // Feedback function
