@@ -51,41 +51,41 @@
           value=""
           align="center"
           color="#FFFFFF"
-          width="1.2"
+          width="2"
           side="double"
         ></a-text>
       </a-entity>
 
-      <!-- Answer options (text only with large transparent clickable planes) -->
+      <!-- Answer options -->
       <a-entity id="options" visible="false">
         <a-text
           value="1. Mrs Valerie Hoffmann"
-          position="-0.4 -0.4 -2"
+          position="0 -0.5 -2"
           align="center"
           color="#00FF00"
-          width="1.2"
+          width="2.5"
           class="clickable"
           id="option1"
         ></a-text>
         <a-text
           value="2. Mrs Annie Fletcher"
-          position="-0.4 -0.5 -2"
+          position="0 -0.8 -2"
           align="center"
           color="#FF0000"
-          width="1.2"
+          width="2.5"
           class="clickable"
           id="option2"
         ></a-text>
       </a-entity>
 
       <!-- Feedback message on top -->
-      <a-entity position="0 0.5 -2">
+      <a-entity position="0 1 -2">
         <a-text
           id="feedback"
           value=""
           align="center"
           color="#FFFF00"
-          width="1.2"
+          width="2"
           side="double"
           visible="false"
         ></a-text>
@@ -94,7 +94,7 @@
       <!-- Camera with cursor -->
       <a-entity camera>
         <a-entity
-          cursor="fuse: false; rayOrigin: mouse;"
+          cursor="rayOrigin: mouse;"
           raycaster="objects: .clickable"
           position="0 0 -1"
         ></a-entity>
@@ -133,7 +133,7 @@
 
           setTimeout(() => {
             feedback.setAttribute("visible", false);
-          }, 5000);
+          }, 4000);
         };
 
         option1.addEventListener("click", () => handleAnswer(true));
