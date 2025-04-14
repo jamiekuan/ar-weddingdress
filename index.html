@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
   <head>
@@ -24,6 +23,7 @@
         <a-asset-item id="animated-asset" src="asset.gltf"></a-asset-item>
       </a-assets>
 
+      <!-- Marker and Model -->
       <a-marker
         id="animated-marker"
         type="pattern"
@@ -44,37 +44,42 @@
         ></a-entity>
       </a-marker>
 
-      <!-- Fixed bottom text -->
+      <!-- Bottom dialogue text -->
       <a-entity position="0 -0.3 -2">
         <a-text
           id="quiz-text"
           value=""
           align="center"
           color="#FFFFFF"
-          width="1.2"
+          width="2"
           side="double"
         ></a-text>
       </a-entity>
 
-      <!-- Answer options -->
+      <!-- Answer options (text only with large transparent clickable planes) -->
       <a-entity id="options" visible="false">
-        <a-text value="1. Mrs Valerie Hoffmann"
-                position="0 -0.4 -2"
-                color="#00FF00"
-                width="1"
-                class="clickable"
-                id="option1"></a-text>
-
-        <a-text value="2. Mrs Annie Fletcher"
-                position="0 -0.6 -2"
-                color="#FF0000"
-                width="1"
-                class="clickable"
-                id="option2"></a-text>
+        <a-text
+          value="1. Mrs Valerie Hoffmann"
+          position="0 -0.6 -2"
+          align="center"
+          color="#00FF00"
+          width="2"
+          class="clickable"
+          id="option1"
+        ></a-text>
+        <a-text
+          value="2. Mrs Annie Fletcher"
+          position="0 -0.85 -2"
+          align="center"
+          color="#FF0000"
+          width="2"
+          class="clickable"
+          id="option2"
+        ></a-text>
       </a-entity>
 
-      <!-- Feedback text -->
-      <a-entity position="0 0.5 -2">
+      <!-- Feedback message on top -->
+      <a-entity position="0 1.2 -2">
         <a-text
           id="feedback"
           value=""
@@ -86,10 +91,17 @@
         ></a-text>
       </a-entity>
 
-      <a-entity camera></a-entity>
+      <!-- Camera with cursor -->
+      <a-entity camera>
+        <a-entity
+          cursor="fuse: false; rayOrigin: mouse;"
+          raycaster="objects: .clickable"
+          position="0 0 -1"
+        ></a-entity>
+      </a-entity>
     </a-scene>
 
-    <!-- Quiz logic script -->
+    <!-- Quiz Script -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const quizText = document.querySelector("#quiz-text");
@@ -98,23 +110,32 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
-        // Show welcome message
-        quizText.setAttribute("value", "Congratulations! You've found the right treasure!");
+        // Step 1: Show welcome
+        quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
-        // Show quiz after 5 seconds
+        // Step 2: After 5s, show intro to quiz
         setTimeout(() => {
-          quizText.setAttribute("value", "Do you know who wore this dress?");
-          options.setAttribute("visible", true);
+          quizText.setAttribute("value", "Let's do a quick quiz!");
         }, 5000);
 
-        // Feedback function
+        // Step 3: After 8s, show question and options
+        setTimeout(() => {
+          quizText.setAttribute("value", "Who wore this dress?");
+          options.setAttribute("visible", true);
+        }, 8000);
+
+        // Handle click
         const handleAnswer = (isCorrect) => {
           options.setAttribute("visible", false);
-          feedback.setAttribute("value", isCorrect ? "Correct! Great job!" : "Oops! Try again.");
+          quizText.setAttribute("value", "");
+          feedback.setAttribute("value", isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again.");
           feedback.setAttribute("visible", true);
+
+          setTimeout(() => {
+            feedback.setAttribute("visible", false);
+          }, 5000);
         };
 
-        // Option click events
         option1.addEventListener("click", () => handleAnswer(true));
         option2.addEventListener("click", () => handleAnswer(false));
       });
