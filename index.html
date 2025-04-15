@@ -18,12 +18,11 @@
       embedded
       gesture-detector
     >
-      <!-- 模型資源 -->
       <a-assets>
         <a-asset-item id="animated-asset" src="asset.gltf"></a-asset-item>
       </a-assets>
 
-      <!-- Marker 模型 -->
+      <!-- Marker and Model -->
       <a-marker
         id="animated-marker"
         type="pattern"
@@ -44,67 +43,53 @@
         ></a-entity>
       </a-marker>
 
-      <!-- UI 固定在畫面上 -->
+      <!-- UI: 固定在畫面上 -->
       <a-entity camera>
-        <!-- 滑鼠點擊游標 -->
+        <!-- 游標 -->
         <a-entity
           cursor="rayOrigin: mouse;"
           raycaster="objects: .clickable"
           position="0 0 0"
         ></a-entity>
 
-        <!-- 顯示文字 -->
+        <!-- 顯示題目文字 -->
         <a-entity position="0 -0.2 -2">
           <a-text
             id="quiz-text"
             value=""
             align="center"
             color="#FFFFFF"
-            width="1.5"
+            width="1"
             side="double"
           ></a-text>
         </a-entity>
 
-        <!-- 選項們 -->
+        <!-- 答案選項 -->
         <a-entity id="options" visible="false">
-          <!-- 選項1 -->
-          <a-text
-            value="1. Mrs Valerie Hoffmann"
-            position="0 -0.3 -2"
-            align="center"
-            color="#00FF00"
-            width="1.5"
-            id="option1-label"
-          ></a-text>
+          <!-- 選項 1 -->
           <a-plane
-            position="0 -0.3 -2"
-            width="2"
-            height="0.3"
-            opacity="0.001"
+            position="0 -0.4 -2"
+            width="1.6"
+            height="0.35"
+            color="#00FF00"
+            text="value: 1. Mrs Valerie Hoffmann; align: center; color: black"
             class="clickable"
             id="option1"
           ></a-plane>
 
-          <!-- 選項2 -->
-          <a-text
-            value="2. Mrs Annie Fletcher"
-            position="0 -0.7 -2"
-            align="center"
-            color="#FF0000"
-            width="1.5"
-            id="option2-label"
-          ></a-text>
+          <!-- 選項 2 -->
           <a-plane
-            position="0 -0.7 -2"
-            width="2"
-            height="0.3"
-            opacity="0.001"
+            position="0 -0.8 -2"
+            width="1.6"
+            height="0.35"
+            color="#FF0000"
+            text="value: 2. Mrs Annie Fletcher; align: center; color: black"
             class="clickable"
             id="option2"
           ></a-plane>
         </a-entity>
 
-        <!-- Feedback 顯示 -->
+        <!-- Feedback -->
         <a-entity position="0 0.5 -2">
           <a-text
             id="feedback"
@@ -119,7 +104,7 @@
       </a-entity>
     </a-scene>
 
-    <!-- 控制腳本 -->
+    <!-- Script -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const quizText = document.querySelector("#quiz-text");
@@ -128,32 +113,29 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
-        let hasAnswered = false;
-
-        // 顯示初始訊息
+        // 顯示歡迎文字
         quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
-        // 5秒後提示答題
+        // 5 秒後顯示 quiz 提示
         setTimeout(() => {
           quizText.setAttribute("value", "Let's do a quick quiz!");
         }, 5000);
 
-        // 8秒後顯示選項
+        // 8 秒後顯示題目 + 選項
         setTimeout(() => {
           quizText.setAttribute("value", "Who wore this dress?");
           options.setAttribute("visible", true);
         }, 8000);
 
-        // 處理點擊答案
+        // 點擊處理
         const handleAnswer = (isCorrect) => {
-          if (hasAnswered) return;
-          hasAnswered = true;
-
           options.setAttribute("visible", false);
           quizText.setAttribute("value", "");
-          feedback.setAttribute("value", isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again.");
+          feedback.setAttribute(
+            "value",
+            isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again."
+          );
           feedback.setAttribute("visible", true);
-
           setTimeout(() => {
             feedback.setAttribute("visible", false);
           }, 4000);
