@@ -52,15 +52,8 @@
           position="0 0 0"
         ></a-entity>
 
-        <!-- 顯示對話文字區（含白底） -->
+        <!-- 顯示對話文字（無底） -->
         <a-entity position="0 -0.2 -2">
-          <a-plane
-            width="2"
-            height="0.3"
-            color="#FFFFFF"
-            opacity="0.5"
-            position="0 0 0.01"
-          ></a-plane>
           <a-text
             id="quiz-text"
             value=""
@@ -86,8 +79,7 @@
             position="0 -0.3 -1.99"
             width="2"
             height="0.3"
-            opacity="0.3"
-            color="#FFFFFF"
+            opacity="0.001"
             class="clickable"
             id="option1"
           ></a-plane>
@@ -105,8 +97,7 @@
             position="0 -0.7 -1.99"
             width="2"
             height="0.3"
-            opacity="0.3"
-            color="#FFFFFF"
+            opacity="0.001"
             class="clickable"
             id="option2"
           ></a-plane>
@@ -136,7 +127,7 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
-        // 文字階段切換
+        // 顯示階段性文字
         quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
         setTimeout(() => {
@@ -160,7 +151,7 @@
           }, 4000);
         };
 
-        // 點擊事件
+        // 點擊事件綁定
         option1.addEventListener("click", () => handleAnswer(true));
         option2.addEventListener("click", () => handleAnswer(false));
       });
