@@ -18,11 +18,12 @@
       embedded
       gesture-detector
     >
+      <!-- 模型資源 -->
       <a-assets>
         <a-asset-item id="animated-asset" src="asset.gltf"></a-asset-item>
       </a-assets>
 
-      <!-- Marker and Model -->
+      <!-- Marker 模型 -->
       <a-marker
         id="animated-marker"
         type="pattern"
@@ -43,29 +44,30 @@
         ></a-entity>
       </a-marker>
 
-      <!-- UI 介面放在相機底下，固定在畫面上 -->
+      <!-- UI 固定在畫面上 -->
       <a-entity camera>
+        <!-- 滑鼠點擊游標 -->
         <a-entity
           cursor="rayOrigin: mouse;"
           raycaster="objects: .clickable"
           position="0 0 0"
         ></a-entity>
 
-        <!-- UI: 顯示文字 -->
+        <!-- 顯示文字 -->
         <a-entity position="0 -0.2 -2">
           <a-text
             id="quiz-text"
             value=""
             align="center"
             color="#FFFFFF"
-            width="1"
+            width="1.5"
             side="double"
           ></a-text>
         </a-entity>
 
-        <!-- UI: 選項區塊 -->
+        <!-- 選項們 -->
         <a-entity id="options" visible="false">
-          <!-- 選項 1 -->
+          <!-- 選項1 -->
           <a-text
             value="1. Mrs Valerie Hoffmann"
             position="0 -0.3 -2"
@@ -75,15 +77,15 @@
             id="option1-label"
           ></a-text>
           <a-plane
-            position="0 -0.45 -2"
-            width="1.5"
+            position="0 -0.3 -2"
+            width="2"
             height="0.3"
-            color="#000000"
+            opacity="0.001"
             class="clickable"
             id="option1"
           ></a-plane>
 
-          <!-- 選項 2 -->
+          <!-- 選項2 -->
           <a-text
             value="2. Mrs Annie Fletcher"
             position="0 -0.7 -2"
@@ -93,16 +95,16 @@
             id="option2-label"
           ></a-text>
           <a-plane
-            position="0 -0.85 -2"
-            width="1.5"
+            position="0 -0.7 -2"
+            width="2"
             height="0.3"
-            color="#000000"
+            opacity="0.001"
             class="clickable"
             id="option2"
           ></a-plane>
         </a-entity>
 
-        <!-- UI: 回饋文字 -->
+        <!-- Feedback 顯示 -->
         <a-entity position="0 0.5 -2">
           <a-text
             id="feedback"
@@ -117,7 +119,7 @@
       </a-entity>
     </a-scene>
 
-    <!-- Script -->
+    <!-- 控制腳本 -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const quizText = document.querySelector("#quiz-text");
@@ -126,18 +128,27 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
+        let hasAnswered = false;
+
+        // 顯示初始訊息
         quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
+        // 5秒後提示答題
         setTimeout(() => {
           quizText.setAttribute("value", "Let's do a quick quiz!");
         }, 5000);
 
+        // 8秒後顯示選項
         setTimeout(() => {
           quizText.setAttribute("value", "Who wore this dress?");
           options.setAttribute("visible", true);
         }, 8000);
 
+        // 處理點擊答案
         const handleAnswer = (isCorrect) => {
+          if (hasAnswered) return;
+          hasAnswered = true;
+
           options.setAttribute("visible", false);
           quizText.setAttribute("value", "");
           feedback.setAttribute("value", isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again.");
