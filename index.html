@@ -78,9 +78,10 @@
             position="0 -0.3 -1"
             width="2"
             height="0.3"
-            material="opacity: 0.001; transparent: true; depthWrite: false"
+            opacity="0.001"
             class="clickable"
             id="option1"
+            material="transparent: true; depthWrite: false"
           ></a-plane>
 
           <!-- 選項 2 -->
@@ -96,9 +97,10 @@
             position="0 -0.7 -1"
             width="2"
             height="0.3"
-            material="opacity: 0.001; transparent: true; depthWrite: false"
+            opacity="0.001"
             class="clickable"
             id="option2"
+            material="transparent: true; depthWrite: false"
           ></a-plane>
         </a-entity>
 
@@ -140,7 +142,10 @@
         const handleAnswer = (isCorrect) => {
           options.setAttribute("visible", false);
           quizText.setAttribute("value", "");
-          feedback.setAttribute("value", isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again.");
+          feedback.setAttribute("value", isCorrect
+            ? "✅ Correct! Great job!"
+            : "❌ Oops! It's Mrs Valerie Hoffmann.");
+          feedback.setAttribute("color", isCorrect ? "#00FF00" : "#FF0000");
           feedback.setAttribute("visible", true);
 
           setTimeout(() => {
