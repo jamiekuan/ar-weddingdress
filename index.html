@@ -43,16 +43,15 @@
         ></a-entity>
       </a-marker>
 
-      <!-- UI: 固定在畫面上 -->
+      <!-- UI 介面放在相機底下，固定在畫面上 -->
       <a-entity camera>
-        <!-- 游標 -->
         <a-entity
           cursor="rayOrigin: mouse;"
           raycaster="objects: .clickable"
           position="0 0 0"
         ></a-entity>
 
-        <!-- 顯示題目文字 -->
+        <!-- UI: 顯示文字 -->
         <a-entity position="0 -0.2 -2">
           <a-text
             id="quiz-text"
@@ -64,32 +63,48 @@
           ></a-text>
         </a-entity>
 
-        <!-- 答案選項 -->
+        <!-- UI: 選項區塊 -->
         <a-entity id="options" visible="false">
           <!-- 選項 1 -->
-          <a-plane
-            position="0 -0.4 -2"
-            width="1.6"
-            height="0.35"
+          <a-text
+            value="1. Mrs Valerie Hoffmann"
+            position="0 -0.3 -2"
+            align="center"
             color="#00FF00"
-            text="value: 1. Mrs Valerie Hoffmann; align: center; color: black"
+            width="1.5"
+            id="option1-label"
+          ></a-text>
+          <a-plane
+            position="0 -0.3 -1"
+            width="2"
+            height="0.3"
+            width="2"
+            opacity="0.001"
             class="clickable"
             id="option1"
           ></a-plane>
 
           <!-- 選項 2 -->
-          <a-plane
-            position="0 -0.8 -2"
-            width="1.6"
-            height="0.35"
+          <a-text
+            value="2. Mrs Annie Fletcher"
+            position="0 -0.7 -2"
+            align="center"
             color="#FF0000"
-            text="value: 2. Mrs Annie Fletcher; align: center; color: black"
+            width="1.5"
+            id="option2-label"
+          ></a-text>
+          <a-plane
+            position="0 -0.7 -1"
+            width="2"
+            height="0.3"
+            width="2"
+            opacity="0.001"
             class="clickable"
             id="option2"
           ></a-plane>
         </a-entity>
 
-        <!-- Feedback -->
+        <!-- UI: 回饋文字 -->
         <a-entity position="0 0.5 -2">
           <a-text
             id="feedback"
@@ -113,29 +128,23 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
-        // 顯示歡迎文字
         quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
-        // 5 秒後顯示 quiz 提示
         setTimeout(() => {
           quizText.setAttribute("value", "Let's do a quick quiz!");
         }, 5000);
 
-        // 8 秒後顯示題目 + 選項
         setTimeout(() => {
           quizText.setAttribute("value", "Who wore this dress?");
           options.setAttribute("visible", true);
         }, 8000);
 
-        // 點擊處理
         const handleAnswer = (isCorrect) => {
           options.setAttribute("visible", false);
           quizText.setAttribute("value", "");
-          feedback.setAttribute(
-            "value",
-            isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again."
-          );
+          feedback.setAttribute("value", isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again.");
           feedback.setAttribute("visible", true);
+
           setTimeout(() => {
             feedback.setAttribute("visible", false);
           }, 4000);
