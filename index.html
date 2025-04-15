@@ -45,25 +45,33 @@
 
       <!-- UI 介面放在相機底下，固定在畫面上 -->
       <a-entity camera>
+        <!-- 點擊感應 -->
         <a-entity
           cursor="rayOrigin: mouse;"
           raycaster="objects: .clickable"
           position="0 0 0"
         ></a-entity>
 
-        <!-- UI: 顯示文字 -->
+        <!-- 顯示對話文字區（含白底） -->
         <a-entity position="0 -0.2 -2">
+          <a-plane
+            width="2"
+            height="0.3"
+            color="#FFFFFF"
+            opacity="0.5"
+            position="0 0 0.01"
+          ></a-plane>
           <a-text
             id="quiz-text"
             value=""
             align="center"
-            color="#FFFFFF"
-            width="1"
+            color="#000000"
+            width="1.8"
             side="double"
           ></a-text>
         </a-entity>
 
-        <!-- UI: 選項區塊 -->
+        <!-- 選項區塊 -->
         <a-entity id="options" visible="false">
           <!-- 選項 1 -->
           <a-text
@@ -75,11 +83,11 @@
             id="option1-label"
           ></a-text>
           <a-plane
-            position="0 -0.3 -1"
+            position="0 -0.3 -1.99"
             width="2"
             height="0.3"
-            width="2"
-            opacity="0.001"
+            opacity="0.3"
+            color="#FFFFFF"
             class="clickable"
             id="option1"
           ></a-plane>
@@ -94,17 +102,17 @@
             id="option2-label"
           ></a-text>
           <a-plane
-            position="0 -0.7 -1"
+            position="0 -0.7 -1.99"
             width="2"
             height="0.3"
-            width="2"
-            opacity="0.001"
+            opacity="0.3"
+            color="#FFFFFF"
             class="clickable"
             id="option2"
           ></a-plane>
         </a-entity>
 
-        <!-- UI: 回饋文字 -->
+        <!-- 回饋文字 -->
         <a-entity position="0 0.5 -2">
           <a-text
             id="feedback"
@@ -128,6 +136,7 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
+        // 文字階段切換
         quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
         setTimeout(() => {
@@ -139,6 +148,7 @@
           options.setAttribute("visible", true);
         }, 8000);
 
+        // 回答處理
         const handleAnswer = (isCorrect) => {
           options.setAttribute("visible", false);
           quizText.setAttribute("value", "");
@@ -150,6 +160,7 @@
           }, 4000);
         };
 
+        // 點擊事件
         option1.addEventListener("click", () => handleAnswer(true));
         option2.addEventListener("click", () => handleAnswer(false));
       });
