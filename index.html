@@ -15,7 +15,6 @@
       loading-screen="enabled: false;"
       renderer="logarithmicDepthBuffer: true;"
       arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-      id="scene"
       embedded
       gesture-detector
     >
@@ -58,24 +57,43 @@
 
       <!-- Answer options -->
       <a-entity id="options" visible="false">
+        <!-- Option 1 Text -->
         <a-text
           value="1. Mrs Valerie Hoffmann"
-          position="0.05 -0.3 -2"
+          position="0 -0.3 -2"
           align="center"
           color="#00FF00"
           width="1.5"
+          id="option1-label"
+        ></a-text>
+        <!-- Option 1 Clickable Plane -->
+        <a-plane
+          position="0 -0.3 -2"
+          width="2"
+          height="0.3"
+          opacity="0.001"
           class="clickable"
           id="option1"
-        ></a-text>
+        ></a-plane>
+
+        <!-- Option 2 Text -->
         <a-text
           value="2. Mrs Annie Fletcher"
-          position="0.05 -0.7 -2"
+          position="0 -0.7 -2"
           align="center"
           color="#FF0000"
           width="1.5"
+          id="option2-label"
+        ></a-text>
+        <!-- Option 2 Clickable Plane -->
+        <a-plane
+          position="0 -0.7 -2"
+          width="2"
+          height="0.3"
+          opacity="0.001"
           class="clickable"
           id="option2"
-        ></a-text>
+        ></a-plane>
       </a-entity>
 
       <!-- Feedback message on top -->
