@@ -24,7 +24,6 @@
 
       <!-- Marker and Model -->
       <a-marker
-        id="animated-marker"
         type="pattern"
         preset="custom"
         url="marker.patt"
@@ -33,25 +32,22 @@
         cursor="fuse: false; rayOrigin: mouse;"
       >
         <a-entity
-          id="bowser-model"
+          gltf-model="#animated-asset"
           scale="2 2 2"
           rotation="-60 0 0"
-          gltf-model="#animated-asset"
           animation-mixer="loop: repeat"
-          class="clickable"
-          gesture-handler
         ></a-entity>
       </a-marker>
 
-      <!-- Camera and UI fixed on screen -->
+      <!-- Camera + UI 固定在畫面 -->
       <a-entity camera>
         <a-entity
-          cursor="rayOrigin: mouse;"
+          cursor="rayOrigin: mouse"
           raycaster="objects: .clickable"
           position="0 0 0"
         ></a-entity>
 
-        <!-- Bottom Dialogue Text -->
+        <!-- 顯示提示 -->
         <a-entity position="0 -0.2 -2">
           <a-text
             id="quiz-text"
@@ -63,11 +59,10 @@
           ></a-text>
         </a-entity>
 
-        <!-- Answer Options Group -->
+        <!-- 選項區 -->
         <a-entity id="options" visible="false">
-
-          <!-- Option 1 -->
-          <a-entity position="0 -0.3 -2">
+          <!-- Option 1 group -->
+          <a-entity position="0 -0.4 -2">
             <a-text
               value="1. Mrs Valerie Hoffmann"
               align="center"
@@ -75,8 +70,8 @@
               width="1.5"
             ></a-text>
             <a-plane
-              position="0 0 0"
-              width="2"
+              position="0 0 -0.01"
+              width="1.8"
               height="0.3"
               opacity="0.001"
               class="clickable"
@@ -84,8 +79,8 @@
             ></a-plane>
           </a-entity>
 
-          <!-- Option 2 -->
-          <a-entity position="0 -0.7 -2">
+          <!-- Option 2 group -->
+          <a-entity position="0 -0.8 -2">
             <a-text
               value="2. Mrs Annie Fletcher"
               align="center"
@@ -93,18 +88,17 @@
               width="1.5"
             ></a-text>
             <a-plane
-              position="0 0 0"
-              width="2"
+              position="0 0 -0.01"
+              width="1.8"
               height="0.3"
               opacity="0.001"
               class="clickable"
               id="option2"
             ></a-plane>
           </a-entity>
-
         </a-entity>
 
-        <!-- Feedback Message -->
+        <!-- 回饋 -->
         <a-entity position="0 0.5 -2">
           <a-text
             id="feedback"
@@ -119,7 +113,7 @@
       </a-entity>
     </a-scene>
 
-    <!-- Quiz Script -->
+    <!-- Script -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const quizText = document.querySelector("#quiz-text");
@@ -128,33 +122,27 @@
         const option1 = document.querySelector("#option1");
         const option2 = document.querySelector("#option2");
 
-        // Step 1: Welcome
         quizText.setAttribute("value", "Congrats! You've found the right treasure!");
 
-        // Step 2: After 5s, show quiz intro
         setTimeout(() => {
           quizText.setAttribute("value", "Let's do a quick quiz!");
         }, 5000);
 
-        // Step 3: Show question and options
         setTimeout(() => {
           quizText.setAttribute("value", "Who wore this dress?");
           options.setAttribute("visible", true);
         }, 8000);
 
-        // Feedback handler
         const handleAnswer = (isCorrect) => {
           options.setAttribute("visible", false);
           quizText.setAttribute("value", "");
           feedback.setAttribute("value", isCorrect ? "✅ Correct! Great job!" : "❌ Oops! Try again.");
           feedback.setAttribute("visible", true);
-
           setTimeout(() => {
             feedback.setAttribute("visible", false);
           }, 4000);
         };
 
-        // Answer click bindings
         option1.addEventListener("click", () => handleAnswer(true));
         option2.addEventListener("click", () => handleAnswer(false));
       });
